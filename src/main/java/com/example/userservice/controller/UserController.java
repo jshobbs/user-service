@@ -3,6 +3,9 @@ package com.example.userservice.controller;
 import com.example.userservice.dto.UserRequest;
 import com.example.userservice.dto.UserResponse;
 import com.example.userservice.service.UserService;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Tag(name = "User Controller", description = "Operations for managing users")
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -26,6 +30,7 @@ public class UserController {
     }
 
 
+    @Operation(summary = "Get service health status")
     @GetMapping("/health")
     public String health() {
 
@@ -34,7 +39,7 @@ public class UserController {
         return "User Service is running!";
     }
 
-
+    @Operation(summary = "Create a new user")
     @PostMapping
     public ResponseEntity<UserResponse> createUser(
             @Valid @RequestBody UserRequest userRequest) {
@@ -56,6 +61,7 @@ public class UserController {
     }
 
 
+    @Operation(summary = "Get list of all users")
     @GetMapping
     public ResponseEntity<List<UserResponse>> getAllUsers() {
 
@@ -73,6 +79,7 @@ public class UserController {
     }
 
 
+    @Operation(summary = "Get user by ID")
     @GetMapping("/{id}")
     public ResponseEntity<UserResponse> getUserById(
             @PathVariable Long id) {
@@ -93,7 +100,7 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
-
+    @Operation(summary = "Update an existing user by ID")
     @PutMapping("/{id}")
     public ResponseEntity<UserResponse> updateUser(
             @PathVariable Long id,
@@ -116,6 +123,7 @@ public class UserController {
     }
 
 
+    @Operation(summary = "Delete a user by ID")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(
             @PathVariable Long id) {
